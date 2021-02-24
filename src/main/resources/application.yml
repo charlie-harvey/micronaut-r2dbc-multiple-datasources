@@ -5,39 +5,41 @@ micronaut:
     port: 4800
 
 datasources:
-  dataSourceOne:
-    url: jdbc:h2:mem:dbOne
+  h2-data-source:
+    url: jdbc:h2:mem:sample
     driverClassName: org.h2.Driver
     username: sa
     password: ''
     schema-generate: CREATE_DROP
     dialect: H2
-  dataSourceTwo:
-    url: jdbc:h2:mem:dbTwo
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
+  mysql-data-source:
+    url: jdbc:mysql://localhost:3306/sample
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: sample
+    password: secret
     schema-generate: CREATE_DROP
-    dialect: H2
+    dialect: MYSQL
 
 flyway:
   datasources:
-    dataSourceOne:
+    h2-data-source:
+      baseline-on-migrate: true
       enabled: true
-    dataSourceTwo:
+    mysql-data-source:
+      baseline-on-migrate: true
       enabled: true
 
 r2dbc:
   datasources:
-    dataSourceOne:
-      url: r2dbc:h2:mem:///dbOne
+    h2-data-source:
+      url: r2dbc:h2:mem:///sample
       username: sa
       password: ''
       schema-generate: CREATE_DROP
       dialect: H2
-    dataSourceTwo:
-      url: r2dbc:h2:mem:///dbTwo
-      username: sa
-      password: ''
+    mysql-data-source:
+      url: r2dbc:mysql://localhost:3306/sample
+      username: sample
+      password: secret
       schema-generate: CREATE_DROP
-      dialect: H2
+      dialect: MYSQL

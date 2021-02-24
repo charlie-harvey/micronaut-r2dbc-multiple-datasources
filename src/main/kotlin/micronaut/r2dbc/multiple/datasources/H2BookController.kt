@@ -6,23 +6,25 @@ import io.micronaut.http.annotation.Post
 import io.reactivex.Single
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.time.LocalDateTime
 import javax.validation.Valid
 
-@Controller("/authors")
-class AuthorController(private val repository: AuthorRepository) {
+@Controller("/h2/books")
+class H2BookController(private val repository: H2BookRepository) {
 
     @Post("/")
-    fun create(author: @Valid Author): Single<Author> {
-        return Single.fromPublisher(repository.save(author))
+    fun create(book: @Valid Book): Single<Book> {
+        book.dateCreated = LocalDateTime.now()
+        return Single.fromPublisher(repository.save(book))
     }
 
     @Get("/")
-    fun all(): Flux<Author> {
+    fun all(): Flux<Book> {
         return repository.findAll()
     }
 
-    @Get("/id")
-    fun get(id: Long): Mono<Author> {
+    @Get("/{id}")
+    fun get(id: Long): Mono<Book> {
         return repository.findById(id)
     }
 }

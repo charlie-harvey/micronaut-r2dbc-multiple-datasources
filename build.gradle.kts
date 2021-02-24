@@ -36,13 +36,20 @@ dependencies {
     implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.data:micronaut-data-jdbc")
-    implementation("io.micronaut.r2dbc:micronaut-data-r2dbc:1.0.0.M2")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("io.r2dbc:r2dbc-h2:0.8.4.RELEASE")
+    implementation(platform("io.micronaut.r2dbc:micronaut-r2dbc-bom:1.0.0"))
+    implementation("io.micronaut.r2dbc:micronaut-r2dbc-core:1.0.0")
+    implementation("io.micronaut.r2dbc:micronaut-data-r2dbc:1.0.0")
+    runtimeOnly("dev.miku:r2dbc-mysql:0.8.2.RELEASE")
+    runtimeOnly("mysql:mysql-connector-java")
 }
 
+flyway {
+    baselineOnMigrate = true
+}
 
 application {
     mainClass.set("micronaut.r2dbc.multiple.datasources.ApplicationKt")
@@ -63,6 +70,4 @@ tasks {
             jvmTarget = "1.8"
         }
     }
-
-
 }
